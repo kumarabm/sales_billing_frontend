@@ -1,0 +1,141 @@
+import React, { useState, useEffect } from "react";
+import { Form, Row, Col, Table, Button } from "react-bootstrap";
+
+const SaleBillForm = () => {
+  const [invoiceNumber, setInvoiceNumber] = useState(1);
+  const [location, setLocation] = useState("");
+  const [store, setStore] = useState("");
+  const [consultant, setConsultant] = useState("");
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [product, setProduct] = useState({
+    name: "",
+    manufacturer: "",
+    batch: "",
+    expiry: "",
+    qty: 1,
+    price: 0,
+    gst: 0,
+    discount: 0,
+    total: 0,
+  });
+
+  const [products, setProducts] = useState([]);
+  const [additionalCharges, setAdditionalCharges] = useState(0);
+  const [discountPercent, setDiscountPercent] = useState(5);
+  const [amountReceived, setAmountReceived] = useState(0);
+  const [cashTendered, setCashTendered] = useState(0);
+  const [paymentMode, setPaymentMode] = useState("Single");
+  const [paymentType, setPaymentType] = useState("Cash");
+  const [additionalNote, setAdditionalNote] = useState("");
+
+  useEffect(() => {
+    const lastInvoice = parseInt(localStorage.getItem("lastInvoiceNumber")) || 0;
+    const newInvoice = lastInvoice + 1;
+    setInvoiceNumber(newInvoice);
+    localStorage.setItem("lastInvoiceNumber", newInvoice);
+  }, []);
+
+  const totalAmount = products.reduce((acc, p) => acc + p.total, 0);
+  const discountAmount = (totalAmount * discountPercent) / 100;
+  const amountReceivable = totalAmount - discountAmount + parseFloat(additionalCharges || 0);
+  const balance = parseFloat(cashTendered || 0) - amountReceivable;
+
+  const handleProductAdd = () => {
+    const productPriceWithGst = product.price + (product.price * product.gst) / 100;
+    const priceAfterDiscount = productPriceWithGst - (productPriceWithGst * product.discount) / 100;
+    const total = priceAfterDiscount * product.qty;
+
+    const newProduct = { ...product, total };
+    setProducts([...products, newProduct]);
+    setProduct({
+      name: "",
+      manufacturer: "",
+      batch: "",
+      expiry: "",
+      qty: 1,
+      price: 0,
+      gst: 0,
+      discount: 0,
+      total: 0,
+    });
+  };
+
+  const handleDeleteProduct = (index) => {
+    const updatedProducts = [...products];
+    updatedProducts.splice(index, 1);
+    setProducts(updatedProducts);
+  };
+
+  return (
+    <div className="container mt-4">
+      <h4 className="text-center mb-4">Sale Bill</h4>
+      <Row className="align-items-center mb-2">
+        <Col md={3}><strong>Type:</strong> OP</Col>
+        <Col md={3}><strong>Invoice #:</strong> {invoiceNumber}</Col>
+      </Row>
+
+      {/* Header Info */}
+      <Row className="mb-3">
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Location</Form.Label>
+            <Form.Control value={location} onChange={(e) => setLocation(e.target.value)} />
+          </Form.Group>
+        </Col>
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Store</Form.Label>
+            <Form.Control value={store} onChange={(e) => setStore(e.target.value)} />
+          </Form.Group>
+        </Col>
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Consultant</Form.Label>
+            <Form.Control value={consultant} onChange={(e) => setConsultant(e.target.value)} />
+          </Form.Group>
+        </Col>
+      </Row>
+
+      <Row className="mb-3">
+        <Col md={3}>
+          <Form.Group>
+            <Form.Label>Name</Form.Label>
+            <Form.Control value={name} onChange={(e) => setName(e.target.value)} />
+          </Form.Group>
+        </Col>
+        <Col md={3}>
+          <Form.Group>
+            <Form.Label>Mobile</Form.Label>
+            <Form.Control value={mobile} onChange={(e) => setMobile(e.target.value)} />
+          </Form.Group>
+        </Col>
+        <Col md={2}>
+          <Form.Group>
+            <Form.Label>Age</Form.Label>
+            <Form.Control value={age} onChange={(e) => setAge(e.target.value)} />
+          </Form.Group>
+        </Col>
+        <Col md={2}>
+          <Form.Group>
+            <Form.Label>Gender</Form.Label>
+            <Form.Select value={gender} onChange={(e) => setGender(e.target.value)}>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+      </Row>
+
+      {/* Product Table */}
+      {/* (Existing content remains the same) */}
+
+    </div>
+  );
+};
+
+export default SaleBillForm;
