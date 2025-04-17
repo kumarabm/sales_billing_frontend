@@ -1,0 +1,338 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+  }
+  
+  .container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h4 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Form Styles */
+  .form-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Row and Col layout */
+  .row {
+    margin-bottom: 15px;
+  }
+  
+  .col-md-2, .col-md-1, .col-md-5 {
+    margin-bottom: 15px;
+  }
+  
+  .col-md-2, .col-md-1 {
+    display: flex;
+    align-items: center;
+  }
+  
+  .text-end {
+    text-align: right;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  /* Table Styles */
+  table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Button Styles */
+  button {
+    font-size: 14px;
+    padding: 8px 16px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #218838;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Radio Button & Select Styles */
+  input[type="radio"], select {
+    margin-right: 10px;
+  }
+  
+  /* Summary & Payment Section Styles */
+  .summary-section {
+    margin-top: 20px;
+    border-top: 2px solid #ddd;
+    padding-top: 20px;
+  }
+  
+  .summary-section .mb-2 {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .summary-section .fw-bold {
+    color: #333;
+  }
+  
+  /* Payment Mode & Type Section */
+  .payment-section {
+    margin-top: 20px;
+  }
+  
+  .payment-section label {
+    font-weight: bold;
+  }
+  
+  .payment-section input[type="text"] {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .payment-section .form-check-inline {
+    margin-right: 15px;
+  }
+  
+  .payment-section .btn-success {
+    margin-top: 20px;
+  }
+
+  /* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap');
+
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif; /* Body font */
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif; /* Heading font */
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600; /* Bold heading */
+  text-align: center;
+}
+
+/* Form Styles */
+.form-label {
+  font-family: 'Poppins', sans-serif; /* Heading font for labels */
+  font-weight: 600;
+  color: #333;
+}
+
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 14px;
+  width: 100%;
+  font-family: 'Roboto', sans-serif; /* Body font for form inputs */
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Row and Col layout */
+.row {
+  margin-bottom: 15px;
+}
+
+.col-md-2, .col-md-1, .col-md-5 {
+  margin-bottom: 15px;
+}
+
+.col-md-2, .col-md-1 {
+  display: flex;
+  align-items: center;
+}
+
+.text-end {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #333;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Button Styles */
+button {
+  font-size: 14px;
+  padding: 8px 16px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Radio Button & Select Styles */
+input[type="radio"], select {
+  margin-right: 10px;
+}
+
+/* Summary & Payment Section Styles */
+.summary-section {
+  margin-top: 20px;
+  border-top: 2px solid #ddd;
+  padding-top: 20px;
+}
+
+.summary-section .mb-2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary-section .fw-bold {
+  color: #333;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Payment Mode & Type Section */
+.payment-section {
+  margin-top: 20px;
+}
+
+.payment-section label {
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+
+.payment-section input[type="text"] {
+  width: 100%;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.payment-section .form-check-inline {
+  margin-right: 15px;
+}
+
+.payment-section .btn-success {
+  margin-top: 20px;
+}
+
+  
+/* Apply styles specifically to the table header cells */
+table thead th {
+  background-color: #f4f4f4;
+  color: orange;  /* Set text color to orange */
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  text-align: center; /* Ensure header text is centered */
+}
+
+/* Optional: Apply a hover effect to table header */
+table thead th:hover {
+  color: #ff6600; /* Slightly darker orange on hover */
+}
