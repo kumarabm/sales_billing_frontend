@@ -51,6 +51,7 @@ const SaleBillForm = () => {
   const [paymentType, setPaymentType] = useState("Cash");
   const [additionalNote, setAdditionalNote] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
+  const [subPaymentType, setSubPaymentType] = useState("");
 
   useEffect(() => {
     if (billData.mobile.length === 10) {
@@ -158,26 +159,25 @@ const SaleBillForm = () => {
 
   const validateFields = () => {
     const errors = {};
-  
+
     // Validate location
     // if (!billData.location.trim()) errors.location = "Location is required.";
-  
+
     // Validate store
     if (!billData.store || billData.store.trim() === "") {
       errors.store = "Store is required.";
     }
-  
+
     // Validate consultant
     if (!billData.consultant.trim()) errors.consultant = "Consultant is required.";
-  
+
     // Validate patient name
     if (!billData.name.trim()) errors.name = "Patient Name is required.";
-  
+
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
   
-
   const handlePrintAndSave = async () => {
     // if (!validateFields()) {
     //   alert("Please fill all the required fields.");
@@ -198,6 +198,7 @@ const SaleBillForm = () => {
         balance,
         paymentMode,
         paymentType,
+        subPaymentType,
         note: additionalNote,
       };
 
@@ -233,499 +234,530 @@ const SaleBillForm = () => {
   };
 
   return (
-    
-      <div className="container mt-4">
-        <h4
-          className="text-center mb-4"
-          style={{
-            color: "#28a745", // Green text color
-            border: "2px solid #28a745", // Green border
-            padding: "10px", // Adds padding inside the border
-            borderRadius: "5px", // Optional: Adds rounded corners to the border
-          }}
-        >
-          Sale Bill
-        </h4>
+    <div className="container mt-4">
+      <h4
+        className="text-center mb-4"
+        style={{
+          color: "#28a745", // Green text color
+          border: "2px solid #28a745", // Green border
+          padding: "10px", // Adds padding inside the border
+          borderRadius: "5px", // Optional: Adds rounded corners to the border
+        }}
+      >
+        Sale Bill
+      </h4>
 
-        <Row className="mb-3">
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label className="fw-bold">
-                Location <span className="text-danger">*</span>
-              </Form.Label>
+      <Row className="mb-3">
+        <Col md={2}>
+          <Form.Group>
+            <Form.Label className="fw-bold">
+              Location <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Control
+              name="location"
+              placeholder="Location"
+              value="Dr Aravinds IVF-PALAKKAD,Premier Tower,Above in SBI in touch"
+              required
+              isInvalid={validationErrors.location}
+              onChange={handleChange}
+              style={{ fontSize: "15px" }}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col md={2}>
+          <Form.Group>
+            <Form.Label className="fw-bold">
+              Store <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Control
+              name="store"
+              placeholder="Store"
+              value="PHARMACY PALAKKAD"
+              required
+              style={{ fontSize: "15px" }}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col md={2}>
+          <Form.Group>
+            <Form.Label className="fw-bold">
+              Consultant <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Control
+              name="consultant"
+              placeholder="Consultant"
+              value={billData.consultant}
+              isInvalid={validationErrors.consultant}
+              required
+              onChange={handleChange}
+              style={{ fontSize: "15px" }}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col md={2}>
+          <Form.Group>
+            <Form.Label className="fw-bold">
+              Patient Name <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Control
+              name="name"
+              placeholder="Name"
+              value={billData.name}
+              isInvalid={validationErrors.name}
+              required
+              onChange={handleChange}
+              style={{ fontSize: "15px" }}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col md={2}>
+          <Form.Group>
+            <Form.Label className="fw-bold">Mobile</Form.Label>
+            <Form.Control
+              name="mobile"
+              placeholder="Mobile"
+              value={billData.mobile} // Ensure binding value to mobile state
+              required
+              onChange={handleChange} // Ensure onChange updates mobile
+              style={{ fontSize: "15px" }}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col md={1}>
+          <Form.Group>
+            <Form.Label className="fw-bold">Age</Form.Label>
+            <Form.Control
+              name="age"
+              type="number"
+              placeholder="Age"
+              value={billData.age}
+              required
+              onChange={handleChange}
+              style={{ fontSize: "15px" }}
+            />
+          </Form.Group>
+        </Col>
+
+        <Col md={1}>
+          <Form.Group>
+            <Form.Label className="fw-bold">Gender</Form.Label>
+            <Form.Select
+              name="gender"
+              required
+              onChange={handleChange}
+              value={billData.gender}
+              style={{ fontSize: "15px" }}
+            >
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+      </Row>
+
+      {/* Product Table */}
+      <Table bordered size="sm">
+        <thead className="text-center">
+          <tr>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              S.No
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Product Name
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Mfr
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Batch
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Expiry
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Qty
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              MRP
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              GST(%)
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Disc(%)
+            </th>
+            <th
+              style={{
+                backgroundColor: "#f4f4f4",
+                color: "orange",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Total
+            </th>
+          </tr>
+        </thead>
+        <tbody className="text-center">
+          <tr>
+            <td>{products.length + 1}</td>
+            <td>
               <Form.Control
-                name="location"
-                placeholder="Location"
-                value="Dr Aravinds IVF-PALAKKAD,Premier Tower,Above in SBI in touch"
-                required
-                isInvalid={validationErrors.location}
-                onChange={handleChange}
-                style={{ fontSize: "15px" }}
+                size="sm"
+                type="text"
+                placeholder="Product Name"
+                value={product.name}
+                onChange={(e) =>
+                  setProduct({ ...product, name: e.target.value })
+                }
               />
-            </Form.Group>
-          </Col>
-
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label className="fw-bold">
-                Store <span className="text-danger">*</span>
-              </Form.Label>
+            </td>
+            <td>
               <Form.Control
-                name="store"
-                placeholder="Store"
-                value="PHARMACY PALAKKAD"
-                required
-                style={{ fontSize: "15px" }}
-                onChange={handleChange}
+                size="sm"
+                type="text"
+                placeholder="Manufacturer"
+                value={product.manufacturer}
+                onChange={(e) =>
+                  setProduct({ ...product, manufacturer: e.target.value })
+                }
               />
-            </Form.Group>
-          </Col>
-
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label className="fw-bold">
-                Consultant <span className="text-danger">*</span>
-              </Form.Label>
+            </td>
+            <td>
+              <Form.Select
+                size="sm"
+                value={product.batch}
+                onChange={(e) =>
+                  setProduct({ ...product, batch: e.target.value })
+                }
+              >
+                <option value="">Select</option>
+                {Array.from({ length: 100 }, (_, i) => i + 1).map((num) => (
+                  <option key={num} value={num}>
+                    {num}
+                  </option>
+                ))}
+              </Form.Select>
+            </td>
+            <td>
               <Form.Control
-                name="consultant"
-                placeholder="Consultant"
-                value={billData.consultant}
-                isInvalid={validationErrors.consultant}
-                required
-                onChange={handleChange}
-                style={{ fontSize: "15px" }}
+                size="sm"
+                type="text"
+                placeholder="Expiry Date"
+                onFocus={(e) => (e.target.type = "date")}
+                onBlur={(e) => {
+                  if (!e.target.value) e.target.type = "text";
+                }}
+                value={product.expiry}
+                onChange={(e) =>
+                  setProduct({ ...product, expiry: e.target.value })
+                }
+                style={{
+                  backgroundColor: "#f4f4f4", // Set the input box background color
+                }}
               />
-            </Form.Group>
-          </Col>
-
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label className="fw-bold">
-                Patient Name <span className="text-danger">*</span>
-              </Form.Label>
+            </td>
+            <td>
               <Form.Control
-                name="name"
-                placeholder="Name"
-                value={billData.name}
-                isInvalid={validationErrors.name}
-                required
-                onChange={handleChange}
-                style={{ fontSize: "15px" }}
-              />
-            </Form.Group>
-          </Col>
-
-          <Col md={2}>
-            <Form.Group>
-              <Form.Label className="fw-bold">Mobile</Form.Label>
-              <Form.Control
-                name="mobile"
-                placeholder="Mobile"
-                value={billData.mobile} // Ensure binding value to mobile state
-                required
-                onChange={handleChange} // Ensure onChange updates mobile
-                style={{ fontSize: "15px" }}
-              />
-            </Form.Group>
-          </Col>
-
-          <Col md={1}>
-            <Form.Group>
-              <Form.Label className="fw-bold">Age</Form.Label>
-              <Form.Control
-                name="age"
+                size="sm"
                 type="number"
-                placeholder="Age"
-                value={billData.age}
-                required
-                onChange={handleChange}
-                style={{ fontSize: "15px" }}
+                value={product.qty}
+                onChange={(e) =>
+                  setProduct({ ...product, qty: parseInt(e.target.value) })
+                }
               />
-            </Form.Group>
-          </Col>
-
-          <Col md={1}>
-            <Form.Group>
-              <Form.Label className="fw-bold">Gender</Form.Label>
-              <Form.Select
-                name="gender"
-                required
-                onChange={handleChange}
-                value={billData.gender}
-                style={{ fontSize: "15px" }}
-              >
-                <option value="">Select</option>
-                <option>Male</option>
-                <option>Female</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-        </Row>
-
-        {/* Product Table */}
-        <Table bordered size="sm">
-          <thead className="text-center">
-            <tr>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                S.No
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Product Name
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Mfr
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Batch
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Expiry
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Qty
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                MRP
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                GST(%)
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Disc(%)
-              </th>
-              <th
-                style={{
-                  backgroundColor: "#f4f4f4",
-                  color: "orange",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Total
-              </th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            <tr>
-              <td>{products.length + 1}</td>
-              <td>
-                <Form.Control
-                  size="sm"
-                  type="text"
-                  placeholder="Product Name"
-                  value={product.name}
-                  onChange={(e) =>
-                    setProduct({ ...product, name: e.target.value })
-                  }
-                />
-              </td>
-              <td>
-                <Form.Control
-                  size="sm"
-                  type="text"
-                  placeholder="Manufacturer"
-                  value={product.manufacturer}
-                  onChange={(e) =>
-                    setProduct({ ...product, manufacturer: e.target.value })
-                  }
-                />
-              </td>
-              <td>
-                <Form.Select
-                  size="sm"
-                  value={product.batch}
-                  onChange={(e) =>
-                    setProduct({ ...product, batch: e.target.value })
-                  }
-                >
-                  <option value="">Select</option>
-                  {Array.from({ length: 100 }, (_, i) => i + 1).map((num) => (
-                    <option key={num} value={num}>
-                      {num}
-                    </option>
-                  ))}
-                </Form.Select>
-              </td>
-              <td>
-                <Form.Control
-                  size="sm"
-                  type="text"
-                  placeholder="Expiry Date"
-                  onFocus={(e) => (e.target.type = "date")}
-                  onBlur={(e) => {
-                    if (!e.target.value) e.target.type = "text";
-                  }}
-                  value={product.expiry}
-                  onChange={(e) =>
-                    setProduct({ ...product, expiry: e.target.value })
-                  }
-                  style={{
-                    backgroundColor: "#f4f4f4", // Set the input box background color
-                  }}
-                />
-              </td>
-              <td>
-                <Form.Control
-                  size="sm"
-                  type="number"
-                  value={product.qty}
-                  onChange={(e) =>
-                    setProduct({ ...product, qty: parseInt(e.target.value) })
-                  }
-                />
-              </td>
-              <td>
-                <Form.Control
-                  size="sm"
-                  type="number"
-                  value={product.price}
-                  onChange={(e) =>
-                    setProduct({
-                      ...product,
-                      price: parseFloat(e.target.value),
-                    })
-                  }
-                  style={{
-                    backgroundColor: "#f4f4f4", // Set the input box background color
-                  }}
-                />
-              </td>
-              <td>
-                <Form.Control
-                  size="sm"
-                  type="number"
-                  value={product.gst}
-                  onChange={(e) =>
-                    setProduct({ ...product, gst: parseFloat(e.target.value) })
-                  }
-                />
-              </td>
-              <td>
-                <Form.Control
-                  size="sm"
-                  type="number"
-                  value={product.discount}
-                  onChange={(e) =>
-                    setProduct({
-                      ...product,
-                      discount: parseFloat(e.target.value),
-                    })
-                  }
-                />
-              </td>
-              <td>
-                <Form.Control
-                  size="sm"
-                  readOnly
-                  value={(product.total || 0).toFixed(2)}
-                  style={{
-                    backgroundColor: "#f4f4f4", // Set the input box background color
-                  }}
-                />
-              </td>
-              <td>
-                <Button size="sm" variant="primary" onClick={handleProductAdd}>
-                  Add
-                </Button>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-
-        {/* Summary & Payment */}
-        <Row className="mt-4 justify-content-end">
-          <Col md={5}>
-            <Row className="mb-2">
-              <Col xs={6} className="fw-bold">
-                Total Amount:
-              </Col>
-              <Col xs={6}>₹{totalAmount.toFixed(2)}</Col>
-            </Row>
-            <Row className="mb-2">
-              <Col xs={6} className="fw-bold">
-                Discount %:
-              </Col>
-              <Col xs={6}>
-                <Form.Control
-                  type="number"
-                  value={discountPercent}
-                  onChange={(e) =>
-                    setDiscountPercent(parseFloat(e.target.value) || 0)
-                  }
-                />
-              </Col>
-            </Row>
-            <Row className="mb-2">
-              <Col xs={6} className="fw-bold">
-                Additional Charges:
-              </Col>
-              <Col xs={6}>
-                <Form.Control
-                  type="number"
-                  value={additionalCharges}
-                  onChange={(e) =>
-                    setAdditionalCharges(parseFloat(e.target.value) || 0)
-                  }
-                />
-              </Col>
-            </Row>
-            <Row className="mb-2">
-              <Col xs={6} className="fw-bold">
-                Amount Receivable:
-              </Col>
-              <Col xs={6}>₹{amountReceivable.toFixed(2)}</Col>
-            </Row>
-            <Row className="mb-2">
-              <Col xs={6} className="fw-bold">
-                Cash Tendered:
-              </Col>
-              <Col xs={6}>
-                <Form.Control
-                  type="number"
-                  value={cashTendered}
-                  onChange={(e) =>
-                    setCashTendered(parseFloat(e.target.value) || 0)
-                  }
-                />
-              </Col>
-            </Row>
-            <Row className="mb-2">
-              <Col xs={6} className="fw-bold">
-                Balance:
-              </Col>
-              <Col xs={6}>
-                <Form.Control readOnly value={balance.toFixed(2)} />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-
-        {/* Payment Options */}
-        <Row className="mt-4">
-          <Col md={5}>
-            <Form.Group className="mb-2">
-              <Form.Label className="fw-bold">
-                Payment Mode <span className="text-danger">*</span>
-              </Form.Label>
-              <div>
-                <Form.Check
-                  inline
-                  label="Single"
-                  name="paymentMode"
-                  type="radio"
-                  checked={paymentMode === "Single"}
-                  onChange={() => setPaymentMode("Single")}
-                />
-                <Form.Check
-                  inline
-                  label="Multiple"
-                  name="paymentMode"
-                  type="radio"
-                  checked={paymentMode === "Multiple"}
-                  onChange={() => setPaymentMode("Multiple")}
-                />
-              </div>
-            </Form.Group>
-
-            <Form.Group className="mb-2">
-              <Form.Label className="fw-bold">
-                Payment Type <span className="text-danger">*</span>
-              </Form.Label>
-              <Form.Select
-                value={paymentType}
-                onChange={(e) => setPaymentType(e.target.value)}
-              >
-                <option value="">Select</option>
-                <option>Cash</option>
-                <option>Card</option>
-                <option>UPI</option>
-                <option>Bank Transfer</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label className="fw-bold">Additional Note</Form.Label>
+            </td>
+            <td>
               <Form.Control
-                as="textarea"
-                rows={2}
-                value={additionalNote}
-                onChange={(e) => setAdditionalNote(e.target.value)}
-                placeholder="Remarks or instructions..."
+                size="sm"
+                type="number"
+                value={product.price}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    price: parseFloat(e.target.value),
+                  })
+                }
+                style={{
+                  backgroundColor: "#f4f4f4", // Set the input box background color
+                }}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </td>
+            <td>
+              <Form.Control
+                size="sm"
+                type="number"
+                value={product.gst}
+                onChange={(e) =>
+                  setProduct({ ...product, gst: parseFloat(e.target.value) })
+                }
+              />
+            </td>
+            <td>
+              <Form.Control
+                size="sm"
+                type="number"
+                value={product.discount}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    discount: parseFloat(e.target.value),
+                  })
+                }
+              />
+            </td>
+            <td>
+              <Form.Control
+                size="sm"
+                readOnly
+                value={(product.total || 0).toFixed(2)}
+                style={{
+                  backgroundColor: "#f4f4f4", // Set the input box background color
+                }}
+              />
+            </td>
+            <td>
+              <Button size="sm" variant="primary" onClick={handleProductAdd}>
+                Add
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
 
-        <div className="mt-4 text-end">
-          <Button variant="success" onClick={handlePrintAndSave}>
-            Print & Save
-          </Button>
-        </div>
+      {/* Summary & Payment */}
+      <Row className="mt-4 justify-content-end">
+        <Col md={5}>
+          <Row className="mb-2">
+            <Col xs={6} className="fw-bold">
+              Total Amount:
+            </Col>
+            <Col xs={6}>₹{totalAmount.toFixed(2)}</Col>
+          </Row>
+          <Row className="mb-2">
+            <Col xs={6} className="fw-bold">
+              Discount %:
+            </Col>
+            <Col xs={6}>
+              <Form.Control
+                type="number"
+                value={discountPercent}
+                onChange={(e) =>
+                  setDiscountPercent(parseFloat(e.target.value) || 0)
+                }
+              />
+            </Col>
+          </Row>
+          <Row className="mb-2">
+            <Col xs={6} className="fw-bold">
+              Additional Charges:
+            </Col>
+            <Col xs={6}>
+              <Form.Control
+                type="number"
+                value={additionalCharges}
+                onChange={(e) =>
+                  setAdditionalCharges(parseFloat(e.target.value) || 0)
+                }
+              />
+            </Col>
+          </Row>
+          <Row className="mb-2">
+            <Col xs={6} className="fw-bold">
+              Amount Receivable:
+            </Col>
+            <Col xs={6}>₹{amountReceivable.toFixed(2)}</Col>
+          </Row>
+          <Row className="mb-2">
+            <Col xs={6} className="fw-bold">
+              Cash Tendered:
+            </Col>
+            <Col xs={6}>
+              <Form.Control
+                type="number"
+                value={cashTendered}
+                onChange={(e) =>
+                  setCashTendered(parseFloat(e.target.value) || 0)
+                }
+              />
+            </Col>
+          </Row>
+          <Row className="mb-2">
+            <Col xs={6} className="fw-bold">
+              Balance:
+            </Col>
+            <Col xs={6}>
+              <Form.Control readOnly value={balance.toFixed(2)} />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+
+      {/* Payment Options */}
+      <Row className="mt-4">
+        <Col md={5}>
+          <Form.Group className="mb-2">
+            <Form.Label className="fw-bold">
+              Payment Mode <span className="text-danger">*</span>
+            </Form.Label>
+            <div>
+              <Form.Check
+                inline
+                label="Single"
+                name="paymentMode"
+                type="radio"
+                checked={paymentMode === "Single"}
+                onChange={() => setPaymentMode("Single")}
+              />
+              <Form.Check
+                inline
+                label="Multiple"
+                name="paymentMode"
+                type="radio"
+                checked={paymentMode === "Multiple"}
+                onChange={() => setPaymentMode("Multiple")}
+              />
+            </div>
+          </Form.Group>
+
+          <Form.Group className="mb-2">
+            <Form.Label className="fw-bold">
+              Payment Type <span className="text-danger">*</span>
+            </Form.Label>
+            <Form.Select
+              value={paymentType}
+              onChange={(e) => {
+                setPaymentType(e.target.value);
+                setSubPaymentType(""); // Clear sub-type when type changes
+              }}
+            >
+              <option value="">Select</option>
+              <option>Cash</option>
+              <option>Card</option>
+              <option>UPI</option>
+              <option>Bank Transfer</option>
+            </Form.Select>
+          </Form.Group>
+
+          {/* Conditional Sub-payment type dropdowns */}
+          {paymentType === "UPI" && (
+            <Form.Group className="mb-2">
+              <Form.Label className="fw-bold">UPI Type</Form.Label>
+              <Form.Select
+                value={subPaymentType}
+                onChange={(e) => setSubPaymentType(e.target.value)}
+              >
+                <option value="">Select</option>
+                <option>Google Pay</option>
+                <option>PhonePe</option>
+                <option>Paytm</option>
+              </Form.Select>
+            </Form.Group>
+          )}
+
+          {paymentType === "Card" && (
+            <Form.Group className="mb-2">
+              <Form.Label className="fw-bold">Card Type</Form.Label>
+              <Form.Select
+                value={subPaymentType}
+                onChange={(e) => setSubPaymentType(e.target.value)}
+              >
+                <option value="">Select</option>
+                <option>Credit Card</option>
+                <option>Debit Card</option>
+              </Form.Select>
+            </Form.Group>
+          )}
+       
+          <Form.Group>
+            <Form.Label className="fw-bold">Additional Note</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={2}
+              value={additionalNote}
+              onChange={(e) => setAdditionalNote(e.target.value)}
+              placeholder="Remarks or instructions..."
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+
+      <div className="mt-4 text-end">
+        <Button variant="success" onClick={handlePrintAndSave}>
+          Print & Save
+        </Button>
       </div>
-    
+    </div>
   );
 };
 
