@@ -1,165 +1,3 @@
-// import React, { useState } from "react";
-// import api from "../services/api";
-
-// const SaleBillForm = () => {
-//   const [billData, setBillData] = useState({
-//     location: "",
-//     store: "",
-//     consultant: "",
-//     name: "",
-//     mobile: "",
-//     age: "",
-//     gender: "",
-//     products: [],
-//     discountPercentage: 5,
-//     discountAmount: 0,
-//     additionalCharges: 0,
-//     amountReceivable: 0,
-//     amountReceived: 0,
-//     due: 0,
-//     paymentMode: "Single",
-//     paymentType: "Cash",
-//     note: "",
-//   });
-
-//   const [product, setProduct] = useState({
-//     name: "",
-//     manufacturer: "",
-//     batch: "",
-//     expiry: "",
-//     qty: 1,
-//     price: 0,
-//     gst: 0,
-//     discount: 0,
-//     total: 0,
-//   });
-
-//   const handleProductAdd = () => {
-//     const total =
-//       product.qty * product.price +
-//       (product.gst / 100) * product.price -
-//       (product.discount / 100) * product.price;
-
-//     const newProduct = { ...product, total };
-//     setBillData({
-//       ...billData,
-//       products: [...billData.products, newProduct],
-//     });
-
-//     setProduct({
-//       name: "",
-//       manufacturer: "",
-//       batch: "",
-//       expiry: "",
-//       qty: 1,
-//       price: 0,
-//       gst: 0,
-//       discount: 0,
-//       total: 0,
-//     });
-//   };
-
-//   const handleChange = (e) => {
-//     setBillData({ ...billData, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSubmit = async () => {
-//     try {
-//       const res = await api.post("/sale-bills", billData);
-//       alert("Sale Bill Saved!");
-//       console.log(res.data);
-//     } catch (err) {
-//       console.error(err);
-//       alert("Error saving bill");
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h2>Sale Bill</h2>
-
-//       {/* Patient Details */}
-//       <input placeholder="Location" name="location" onChange={handleChange} />
-//       <input placeholder="Store" name="store" onChange={handleChange} />
-//       <input placeholder="Consultant" name="consultant" onChange={handleChange} />
-//       <input placeholder="Name" name="name" onChange={handleChange} />
-//       <input placeholder="Mobile" name="mobile" onChange={handleChange} />
-//       <input placeholder="Age" name="age" onChange={handleChange} />
-//       <select name="gender" onChange={handleChange}>
-//         <option value="">Select Gender</option>
-//         <option>Male</option>
-//         <option>Female</option>
-//       </select>
-
-//       <hr />
-
-//       {/* Product Form */}
-//       <input
-//         placeholder="Product Name"
-//         value={product.name}
-//         onChange={(e) => setProduct({ ...product, name: e.target.value })}
-//       />
-//       <input
-//         placeholder="Manufacturer"
-//         value={product.manufacturer}
-//         onChange={(e) => setProduct({ ...product, manufacturer: e.target.value })}
-//       />
-//       <input
-//         placeholder="Batch"
-//         value={product.batch}
-//         onChange={(e) => setProduct({ ...product, batch: e.target.value })}
-//       />
-//       <input
-//         placeholder="Expiry"
-//         value={product.expiry}
-//         onChange={(e) => setProduct({ ...product, expiry: e.target.value })}
-//       />
-//       <input
-//         placeholder="Qty"
-//         type="number"
-//         value={product.qty}
-//         onChange={(e) => setProduct({ ...product, qty: parseInt(e.target.value) })}
-//       />
-//       <input
-//         placeholder="Price"
-//         type="number"
-//         value={product.price}
-//         onChange={(e) => setProduct({ ...product, price: parseFloat(e.target.value) })}
-//       />
-//       <input
-//         placeholder="GST %"
-//         type="number"
-//         value={product.gst}
-//         onChange={(e) => setProduct({ ...product, gst: parseFloat(e.target.value) })}
-//       />
-//       <input
-//         placeholder="Discount %"
-//         type="number"
-//         value={product.discount}
-//         onChange={(e) => setProduct({ ...product, discount: parseFloat(e.target.value) })}
-//       />
-//       <button onClick={handleProductAdd}>Add Product</button>
-
-//       <ul>
-//         {billData.products.map((p, idx) => (
-//           <li key={idx}>{p.name} - Qty: {p.qty}, Total: ₹{p.total.toFixed(2)}</li>
-//         ))}
-//       </ul>
-
-//       <hr />
-
-//       <input
-//         placeholder="Note"
-//         name="note"
-//         onChange={handleChange}
-//       />
-//       <button onClick={handleSubmit}>Submit Sale Bill</button>
-//     </div>
-//   );
-// };
-
-// export default SaleBillForm;
-
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col, Table, Button } from "react-bootstrap";
 import api from "../services/api";
@@ -322,7 +160,7 @@ const SaleBillForm = () => {
     const errors = {};
   
     // Validate location
-    if (!billData.location.trim()) errors.location = "Location is required.";
+    // if (!billData.location.trim()) errors.location = "Location is required.";
   
     // Validate store
     if (!billData.store || billData.store.trim() === "") {
@@ -341,10 +179,10 @@ const SaleBillForm = () => {
   
 
   const handlePrintAndSave = async () => {
-    if (!validateFields()) {
-      alert("Please fill all the required fields.");
-      return;
-    }
+    // if (!validateFields()) {
+    //   alert("Please fill all the required fields.");
+    //   return;
+    // }
     try {
       const finalData = {
         ...billData,
