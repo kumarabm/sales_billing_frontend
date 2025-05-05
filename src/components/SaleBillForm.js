@@ -61,7 +61,12 @@ const SaleBillForm = () => {
 
   const fetchCustomerData = async (mobile) => {
     try {
-      const response = await api.get(`/sale-bills/customer/${mobile}`);
+       // Make GET request to fetch customer data
+    const response = await api.get(`/sale-bills/customer/${mobile}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`, // Add token if needed
+      },
+    });
       const data = response.data;
 
       // Autofill customer details
