@@ -5,7 +5,7 @@ import "../style/SaleBillForm.css";
 
 const SaleBillForm = () => {
   const initialBillData = {
-    location: "Dr Aravinds IVF-PALAKKAD,Premier Tower,Above in SBI in touch",
+    location: "MS Health Care",
     store: "",
     consultant: "",
     name: "",
@@ -261,7 +261,7 @@ const SaleBillForm = () => {
             <Form.Control
               name="location"
               placeholder="Location"
-              value="Dr Aravinds IVF-PALAKKAD,Premier Tower,Above in SBI in touch"
+              value="MS Health Care"
               required
               isInvalid={validationErrors.location}
               onChange={handleChange}
